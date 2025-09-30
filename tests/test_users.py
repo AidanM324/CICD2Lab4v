@@ -31,3 +31,11 @@ def test_delete_then_404(client):
     assert r1.status_code == 204
     r2 = client.delete("/api/users/10")
     assert r2.status_code == 404
+
+def test_put_then_404(client):
+    client.post("/api/users", json=user_payload(uid=10))
+    r1 = client.put("/api/users/10", json=user_payload())
+    assert r1.status_code == 200
+    r2 = client.put("/api/users/123", json=user_payload())
+    assert r2.status_code == 404
+
